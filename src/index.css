@@ -1,5 +1,6 @@
 body {
   background: #000000;
+  color: #fff;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -8,7 +9,37 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.banner-image {
+  height: 125px;
+  width: 455px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.launch-header {
+  font-family: 'Secular One', sans-serif;
+}
+
+.header-container {
+  margin: 0 auto;
+  height: 450px;
+  width: 100%;
+}
+
+
+.company-name {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 700;
+}
+
+
+
+
+@media only screen and (max-width: 767px) {
+  .banner-image {
+    width: 100%;
+  }
 }
