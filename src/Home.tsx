@@ -37,7 +37,6 @@ const ConnectButton = styled(WalletDialogButton)`
   height: 60px;
   margin-top: 10px;
   margin-bottom: 5px;
-  background: linear-gradient(180deg, #604ae5 0%, #813eee 100%);
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -71,6 +70,7 @@ const Home = (props: HomeProps) => {
   const [discountPrice, setDiscountPrice] = useState<anchor.BN>();
   const [needTxnSplit, setNeedTxnSplit] = useState(true);
   const [setupTxn, setSetupTxn] = useState<SetupState>();
+  const goLiveDate = "2022-08-04T20:00:00Z";
 
   const rpcUrl = props.rpcHost;
   const wallet = useWallet();
@@ -118,8 +118,8 @@ const Home = (props: HomeProps) => {
           );
           console.log("Candy machine state: ", cndy);
           let active = cndy?.state.goLiveDate
-            ? cndy?.state.goLiveDate.toNumber() < new Date().getTime() / 1000
-            : false;
+          ? cndy?.state.goLiveDate.toNumber() < new Date().getTime() / 1000
+          : false;
           let presale = false;
 
           // duplication of state to make sure we have the right values!
@@ -489,9 +489,9 @@ const Home = (props: HomeProps) => {
   }, [refreshCandyMachineState]);
 
   return (
-    <Container style={{ marginTop: 100 }}>
+    <Container style={{ marginTop: 10 }}>
       <Container maxWidth="xs" style={{ position: "relative" }}>
-        <Paper
+      <Paper
           style={{
             padding: 24,
             paddingBottom: 10,
@@ -500,7 +500,310 @@ const Home = (props: HomeProps) => {
           }}
         >
           {!wallet.connected ? (
-            <ConnectButton>Connect Wallet</ConnectButton>
+            <>
+              <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <Grid item xs={6}>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    style={{
+                      textAlign: "center",
+                      color: "#3b3b3b",
+                    }}
+                  >
+                    Mint Date:
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    color="textPrimary"
+                    style={{
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      color: "#000",
+                    }}
+                  >
+                      8/10/2022
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    style={{
+                      textAlign: "center",
+                      color: "#3b3b3b",
+                    }}
+                  >
+                    Total Supply
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    color="textPrimary"
+                    style={{
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      color: "#000",
+                    }}
+                  >
+                    250
+                  </Typography>
+                </Grid>
+
+                <Grid
+                  item
+                  xs={12}
+                  style={{
+                    marginTop: "10px",
+                  }}
+                >
+                  <hr
+                    style={{
+                      color: "gray",
+                      backgroundColor: "gray",
+                      height: 1,
+                      borderColor: "gray",
+                    }}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  xs={6}
+                  style={{
+                    marginTop: "10px",
+                  }}
+                >
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    style={{
+                      textAlign: "center",
+                      color: "#3b3b3b",
+                    }}
+                  >
+                    Whitelist Mint
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    color="textPrimary"
+                    style={{
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      color: "#000",
+                    }}
+                  >
+                    1:00pm EST
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  xs={6}
+                  style={{
+                    marginTop: "10px",
+                  }}
+                >
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    style={{
+                      textAlign: "center",
+                      color: "#3b3b3b",
+                    }}
+                  >
+                    Mint Price
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    color="textPrimary"
+                    style={{
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      color: "#000",
+                    }}
+                  >
+                    1 Sol
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  xs={10}
+                  style={{
+                    marginTop: "5px",
+                  }}
+                >
+                  <MintCountdown
+                    key="notConnectedWhitelistLive"
+                    date={getNotConnectedFourthWhitelistCountdown()}
+                    style={{ justifyContent: "center" }}
+                    status={
+                      new Date().getTime() >=
+                        new Date(goLiveDate).getTime() -
+                        3600000 &&
+                      new Date().getTime() <=
+                        new Date(goLiveDate).getTime()
+                        ? "LIVE"
+                        : "COMPLETED"
+                    }
+                    onComplete={toggleMintButton}
+                  />
+                  {new Date().getTime() <=
+                  new Date(goLiveDate).getTime() - 3600000 ? (
+                    <Typography
+                      variant="caption"
+                      align="center"
+                      display="block"
+                      style={{
+                        fontWeight: "bold",
+                        marginLeft: "8px",
+                        color: "#3b3b3b",
+                      }}
+                    >
+                      UNTIL WHITELIST MINT
+                    </Typography>
+                  ) : (
+                    ""
+                  )}
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  style={{
+                    marginTop: "10px",
+                  }}
+                >
+                  <hr
+                    style={{
+                      color: "gray",
+                      backgroundColor: "gray",
+                      height: 1,
+                      borderColor: "gray",
+                    }}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  xs={6}
+                  style={{
+                    marginTop: "10px",
+                  }}
+                >
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    style={{
+                      textAlign: "center",
+                      color: "#3b3b3b",
+                    }}
+                  >
+                    Public Mint
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    color="textPrimary"
+                    style={{
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      color: "#000",
+                    }}
+                  >
+                    2:01 PM EST
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  xs={6}
+                  style={{
+                    marginTop: "10px",
+                  }}
+                >
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    style={{
+                      textAlign: "center",
+                      color: "#3b3b3b",
+                    }}
+                  >
+                    Mint Price
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    color="textPrimary"
+                    style={{
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      color: "#000",
+                    }}
+                  >
+                    1.5 Sol
+                  </Typography>
+                </Grid>
+
+                <Grid
+                  item
+                  xs={10}
+                  style={{
+                    marginTop: "5px",
+                  }}
+                >
+                  <MintCountdown
+                    key="notConnectedPublicLive"
+                    date={getNotConnectedPublicCountdown()}
+                    style={{ justifyContent: "center" }}
+                    status={
+                      new Date(goLiveDate).getTime() <=
+                      new Date().getTime()
+                        ? "LIVE"
+                        : "LIVE"
+                    }
+                    onComplete={toggleMintButton}
+                  />
+                  {new Date(goLiveDate).getTime() >=
+                  new Date().getTime() ? (
+                    <Typography
+                      variant="caption"
+                      align="center"
+                      display="block"
+                      style={{
+                        fontWeight: "bold",
+                        marginLeft: "8px",
+                        color: "#3b3b3b",
+                      }}
+                    >
+                      UNTIL PUBLIC MINT
+                    </Typography>
+                  ) : (
+                    ""
+                  )}
+                </Grid>
+              </Grid>
+
+              <Grid
+                item
+                xs={12}
+                style={{
+                  marginTop: "10px",
+                }}
+              >
+                <hr
+                  style={{
+                    color: "gray",
+                    backgroundColor: "gray",
+                    height: 1,
+                    borderColor: "gray",
+                  }}
+                />
+              </Grid>
+              <ConnectButton>Connect Wallet</ConnectButton>
+            </>
           ) : (
             <>
               {candyMachine && (
@@ -508,47 +811,96 @@ const Home = (props: HomeProps) => {
                   container
                   direction="row"
                   justifyContent="center"
-                  wrap="nowrap"
+                  style={{
+                    marginBottom: "10px",
+                  }}
                 >
-                  <Grid item xs={3}>
-                    <Typography variant="body2" color="textSecondary">
-                      Remaining
+                  <Grid item xs={6}>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      style={{
+                        textAlign: "center",
+                        color: "#3b3b3b",
+                      }}
+                    >
+                      Mint Date:
                     </Typography>
                     <Typography
                       variant="h6"
                       color="textPrimary"
                       style={{
                         fontWeight: "bold",
+                        textAlign: "center",
+                        color: "#000",
                       }}
                     >
-                      {`${itemsRemaining}`}
+                      8/10/2022
                     </Typography>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Typography variant="body2" color="textSecondary">
-                      {isWhitelistUser && discountPrice
-                        ? "Discount Price"
-                        : "Price"}
+                  <Grid item xs={6}>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      style={{
+                        textAlign: "center",
+                        color: "#3b3b3b",
+                      }}
+                    >
+                      Your Price
                     </Typography>
                     <Typography
                       variant="h6"
                       color="textPrimary"
-                      style={{ fontWeight: "bold" }}
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        color: "#000",
+                      }}
                     >
-                      {isWhitelistUser && discountPrice
+                     {isWhitelistUser && discountPrice
                         ? `◎ ${formatNumber.asNumber(discountPrice)}`
                         : `◎ ${formatNumber.asNumber(
                             candyMachine.state.price
                           )}`}
+                      Sol
                     </Typography>
                   </Grid>
-                  <Grid item xs={5}>
-                    {isActive && endDate && Date.now() < endDate.getTime() ? (
+
+                  <Grid
+                    item
+                    xs={12}
+                    style={{
+                      marginTop: "10px",
+                    }}
+                  >
+                    <hr
+                      style={{
+                        color: "gray",
+                        backgroundColor: "gray",
+                        height: 1,
+                        borderColor: "gray",
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              )}
+              {candyMachine && (
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="center"
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  {isActive && endDate && Date.now() < endDate.getTime() ? (
+                    <Grid item xs={6}>
                       <>
                         <MintCountdown
                           key="endSettings"
                           date={getCountdownDate(candyMachine)}
-                          style={{ justifyContent: "flex-end" }}
+                          style={{ justifyContent: "center" }}
                           status="COMPLETED"
                           onComplete={toggleMintButton}
                         />
@@ -556,42 +908,299 @@ const Home = (props: HomeProps) => {
                           variant="caption"
                           align="center"
                           display="block"
-                          style={{ fontWeight: "bold" }}
+                          style={{ fontWeight: "bold", color: "#3b3b3b" }}
                         >
                           TO END OF MINT
                         </Typography>
                       </>
-                    ) : (
-                      <>
+                    </Grid>
+                  ) : (
+                    <>
+                      <Grid
+                        item
+                        xs={12}
+                        style={{
+                          paddingLeft: "2px",
+                          paddingRight: "2px",
+                        }}
+                      >
+                        <Typography
+                          variant="h6"
+                          color="textPrimary"
+                          style={{
+                            fontWeight: "bold",
+                            textAlign: "left",
+                            marginLeft: "3px",
+                            color: "#000",
+                          }}
+                        >
+                          {`${candyMachine.state.itemsRedeemed} / ${candyMachine.state.itemsAvailable}`}{" "}
+                          Minted
+                        </Typography>
+                        <div className={"progress"} style={{ height: "20px" }}>
+                          <div
+                            className={"progress-bar"}
+                            role="progressbar"
+                            style={{
+                              backgroundColor: "#384457",
+                              width: `${
+                                (candyMachine.state.itemsRedeemed /
+                                  candyMachine.state.itemsAvailable) *
+                                100
+                              }%`,
+                            }}
+                          >{`${Math.round(
+                            (candyMachine.state.itemsRedeemed /
+                              candyMachine.state.itemsAvailable) *
+                              100,
+                          )}%`}</div>
+                        </div>
+                      </Grid>
+                      <Grid
+                        item
+                        xs={12}
+                        style={{
+                          marginTop: "10px",
+                        }}
+                      >
+                        <hr
+                          style={{
+                            color: "gray",
+                            backgroundColor: "gray",
+                            height: 1,
+                            borderColor: "gray",
+                          }}
+                        />
+                      </Grid>
+
+                      <Grid
+                        item
+                        xs={6}
+                        style={{
+                          marginTop: "10px",
+                        }}
+                      >
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          style={{
+                            textAlign: "center",
+                            color: "#3b3b3b",
+                          }}
+                        >
+                          Whitelist Mint
+                        </Typography>
+                        <Typography
+                          variant="h6"
+                          color="textPrimary"
+                          style={{
+                            fontWeight: "bold",
+                            textAlign: "center",
+                            color: "#000",
+                          }}
+                        >
+                          1:00 PM EST
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        item
+                        xs={6}
+                        style={{
+                          marginTop: "10px",
+                        }}
+                      >
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          style={{
+                            textAlign: "center",
+                            color: "#3b3b3b",
+                          }}
+                        >
+                          Mint Price
+                        </Typography>
+                        <Typography
+                          variant="h6"
+                          color="textPrimary"
+                          style={{
+                            fontWeight: "bold",
+                            textAlign: "center",
+                            color: "#000",
+                          }}
+                        >
+                          1 Sol
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        item
+                        xs={10}
+                        style={{
+                          marginTop: "5px",
+                        }}
+                      >
+                        <MintCountdown
+                          key="goWhiteListLive"
+                          date={getWhiteListDate(candyMachine)}
+                          style={{ justifyContent: "center" }}
+                          status={
+                            new Date().getTime() >=
+                              new Date(goLiveDate).getTime() -
+                              3600000 &&
+                            new Date().getTime() <=
+                              new Date(goLiveDate).getTime()
+                              ? "LIVE"
+                              : "COMPLETED"
+                          }
+                          onComplete={toggleMintButton}
+                        />
+                        {new Date().getTime() <=
+                        new Date(goLiveDate).getTime() -
+                        3600000 ? (
+                          <Typography
+                            variant="caption"
+                            align="center"
+                            display="block"
+                            style={{
+                              fontWeight: "bold",
+                              marginLeft: "8px",
+                              color: "#3b3b3b",
+                            }}
+                          >
+                            UNTIL WHITELIST MINT 
+                          </Typography>
+                        ) : (
+                          ""
+                        )}
+                      </Grid>
+
+                      <Grid
+                        item
+                        xs={12}
+                        style={{
+                          marginTop: "10px",
+                        }}
+                      >
+                        <hr
+                          style={{
+                            color: "gray",
+                            backgroundColor: "gray",
+                            height: 1,
+                            borderColor: "gray",
+                          }}
+                        />
+                      </Grid>
+
+                      <Grid
+                        item
+                        xs={6}
+                        style={{
+                          marginTop: "10px",
+                        }}
+                      >
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          style={{
+                            textAlign: "center",
+                            color: "#3b3b3b",
+                          }}
+                        >
+                          Public Mint
+                        </Typography>
+                        <Typography
+                          variant="h6"
+                          color="textPrimary"
+                          style={{
+                            fontWeight: "bold",
+                            textAlign: "center",
+                            color: "#000",
+                          }}
+                        >
+                          2:01 PM EST
+                        </Typography>
+                      </Grid>
+
+                      <Grid
+                        item
+                        xs={6}
+                        style={{
+                          marginTop: "10px",
+                        }}
+                      >
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          style={{
+                            textAlign: "center",
+                            color: "#3b3b3b",
+                          }}
+                        >
+                          Mint Price
+                        </Typography>
+                        <Typography
+                          variant="h6"
+                          color="textPrimary"
+                          style={{
+                            fontWeight: "bold",
+                            textAlign: "center",
+                            color: "#000",
+                          }}
+                        >
+                        1.5 Sol
+                        </Typography>
+                      </Grid>
+
+                      <Grid
+                        item
+                        xs={10}
+                        style={{
+                          marginTop: "5px",
+                        }}
+                      >
                         <MintCountdown
                           key="goLive"
                           date={getCountdownDate(candyMachine)}
-                          style={{ justifyContent: "flex-end" }}
+                          style={{ justifyContent: "center" }}
                           status={
                             candyMachine?.state?.isSoldOut ||
                             (endDate && Date.now() > endDate.getTime())
                               ? "COMPLETED"
-                              : isPresale
-                              ? "PRESALE"
                               : "LIVE"
                           }
                           onComplete={toggleMintButton}
                         />
-                        {isPresale &&
-                          candyMachine.state.goLiveDate &&
-                          candyMachine.state.goLiveDate.toNumber() >
-                            new Date().getTime() / 1000 && (
-                            <Typography
-                              variant="caption"
-                              align="center"
-                              display="block"
-                              style={{ fontWeight: "bold" }}
-                            >
-                              UNTIL PUBLIC MINT
-                            </Typography>
-                          )}
-                      </>
-                    )}
+                        {candyMachine.state.goLiveDate &&
+                        candyMachine.state.goLiveDate.toNumber() >
+                          new Date().getTime() / 1000 ? (
+                          <Typography
+                            variant="caption"
+                            align="center"
+                            display="block"
+                            style={{ fontWeight: "bold", color: "#3b3b3b" }}
+                          >
+                            UNTIL PUBLIC MINT
+                          </Typography>
+                        ) : (
+                          ""
+                        )}
+                      </Grid>
+                    </>
+                  )}
+                  <Grid
+                    item
+                    xs={12}
+                    style={{
+                      marginTop: "10px",
+                    }}
+                  >
+                    <hr
+                      style={{
+                        color: "gray",
+                        backgroundColor: "gray",
+                        height: 1,
+                        borderColor: "gray",
+                      }}
+                    />
                   </Grid>
                 </Grid>
               )}
@@ -702,14 +1311,6 @@ const Home = (props: HomeProps) => {
               </MintContainer>
             </>
           )}
-          <Typography
-            variant="caption"
-            align="center"
-            display="block"
-            style={{ marginTop: 7, color: "grey" }}
-          >
-            Powered by METAPLEX
-          </Typography>
         </Paper>
       </Container>
 
@@ -731,8 +1332,25 @@ const Home = (props: HomeProps) => {
   );
 };
 
-const getCountdownDate = (
-  candyMachine: CandyMachineAccount
+const goLiveDate = "2022-08-04T20:00:00Z";
+
+const getNotConnectedFourthWhitelistCountdown = (): Date | undefined => {
+  const value = toDate(
+    new anchor.BN(new Date(goLiveDate).getTime() / 1000),
+  );
+
+  value?.setHours(value?.getHours() - 1);
+  return value;
+};
+
+const getNotConnectedPublicCountdown = (): Date | undefined => {
+  return toDate(
+    new anchor.BN(new Date(goLiveDate).getTime() / 1000),
+  );
+};
+
+const getWhiteListDate = (
+  candyMachine: CandyMachineAccount,
 ): Date | undefined => {
   if (
     candyMachine.state.isActive &&
@@ -741,12 +1359,35 @@ const getCountdownDate = (
     return toDate(candyMachine.state.endSettings.number);
   }
 
-  return toDate(
+  const value = toDate(
     candyMachine.state.goLiveDate
       ? candyMachine.state.goLiveDate
       : candyMachine.state.isPresale
       ? new anchor.BN(new Date().getTime() / 1000)
-      : undefined
+      : undefined,
+  );
+
+  value?.setHours(value?.getHours() - 1);
+
+  return value;
+};
+
+const getCountdownDate = (
+  candyMachine: CandyMachineAccount | undefined,
+): Date | undefined => {
+  if (
+    candyMachine?.state.isActive &&
+    candyMachine?.state.endSettings?.endSettingType.date
+  ) {
+    return toDate(candyMachine?.state.endSettings.number);
+  }
+
+  return toDate(
+    candyMachine?.state.goLiveDate
+      ? candyMachine?.state.goLiveDate
+      : candyMachine?.state.isPresale
+      ? new anchor.BN(new Date().getTime() / 1000)
+      : undefined,
   );
 };
 

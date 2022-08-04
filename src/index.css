@@ -14,29 +14,9 @@ body {
   width: 455px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+hr {
+  opacity: 0.1;
 }
-
-.launch-header {
-  font-family: 'Secular One', sans-serif;
-}
-
-.header-container {
-  margin: 0 auto;
-  height: 450px;
-  width: 100%;
-}
-
-
-.company-name {
-  font-family: 'Kanit', sans-serif;
-  font-weight: 700;
-}
-
-
-
 
 @media only screen and (max-width: 767px) {
   .banner-image {
